@@ -1,0 +1,19 @@
+language: generic
+before_install:
+  # install sauce labs runner
+  - SAUCE_RUNNER_VERSION=0.17
+  - SAUCE_RUNNER=sauce-runner-virtual-$SAUCE_RUNNER_VERSION-linux
+  - |
+    wget --quiet https://saucelabs.com/downloads/$SAUCE_RUNNER.zip
+    unzip -qq $SAUCE_RUNNER.zip > /dev/null
+    rm $SAUCE_RUNNER.zip
+    export PATH="$PATH":"$PWD/$SAUCE_RUNNER/bin"
+
+  # build apks
+  - |
+    cd android
+    gradle assembleAndroidTest assembleDebug
+
+script:
+  # run espresso in sauce labs
+  - sauce-runner-virtual -u $SAUCE_USER -f espresso -a build/app/outputs/apk/debug/app-debug.apk -t build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk -d 'deviceName=Google Pixel GoogleAPI Emulator,platformVersion=7.0'
