@@ -1,5 +1,16 @@
 language: generic
-before_install:
+install:
+  # install pre-compiled flutter
+  - FLUTTER_CHANNEL=stable
+  - FLUTTER_VERSION=1.0.0-${FLUTTER_CHANNEL}
+  - |
+    wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz
+    tar xf flutter.tar.xz > /dev/null
+    rm flutter.tar.xz
+  - export PATH="$PATH":"$HOME/.pub-cache/bin"
+  - export PATH=$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin:$PATH
+  - flutter doctor -v
+
   # install sauce labs runner
   - SAUCE_RUNNER_VERSION=0.17
   - SAUCE_RUNNER=sauce-runner-virtual-$SAUCE_RUNNER_VERSION-linux
@@ -9,6 +20,7 @@ before_install:
     rm $SAUCE_RUNNER.zip
     export PATH="$PATH":"$PWD/$SAUCE_RUNNER/bin"
 
+before_script:
   # build apks
   - |
     cd android
