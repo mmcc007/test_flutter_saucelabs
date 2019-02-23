@@ -46,7 +46,14 @@ before_script:
   - |
     cd android
     ./gradlew assembleAndroidTest assembleDebug
+    cd ..
 
 script:
   # run espresso in sauce labs
+  - echo PWD=$PWD
   - sauce-runner-virtual -u $SAUCE_USER -f espresso -a build/app/outputs/apk/debug/app-debug.apk -t build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk -d 'deviceName=Google Pixel GoogleAPI Emulator,platformVersion=7.0'
+cache:
+  directories:
+    - $HOME/.pub-cache
+    - $HOME/.gradle
+    - $PWD/android/.gradle
