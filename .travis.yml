@@ -29,7 +29,7 @@ before_script:
   # build apks required by espresso
   - |
     cd android
-    gradle assembleAndroidTest assembleDebug
+    ./gradlew assembleAndroidTest assembleDebug
 
 script:
   # run espresso in sauce labs
