@@ -16,7 +16,8 @@ dependencies:
   cupertino_icons: 0.1.2
   video_player: 0.7.2
   flutter_tools:
-    path: /Users/jenkins/Library/flutter/packages/flutter_tools
+#    path: /Users/jenkins/Library/flutter/packages/flutter_tools
+    path: flutter/packages/flutter_tools
 
   # Also update dev/benchmarks/complex_layout/pubspec.yaml
   flutter_gallery_assets: 0.1.6
