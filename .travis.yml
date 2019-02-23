@@ -47,7 +47,7 @@ before_script:
 #    cd android
 #    ./gradlew assembleAndroidTest assembleDebug
 #    cd ..
-  - tool/run_instrumentation_test.sh || echo ignore exit(1)
+  - tool/run_instrumentation_test.sh || echo 'ignore exit(1)'
 
 script:
   # run espresso in sauce labs
