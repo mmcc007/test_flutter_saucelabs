@@ -4,7 +4,7 @@ install:
   - FLUTTER_CHANNEL=stable
   - FLUTTER_VERSION=1.0.0-${FLUTTER_CHANNEL}
   - |
-    sudo apt-get install -y --no-install-recommends libstdc++6 > /dev/null
+    sudo apt-get install -y --no-install-recommends lib32stdc++6 libstdc++6 > /dev/null
     cd ~/Library
     wget --quiet --output-document=flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/${FLUTTER_CHANNEL}/linux/flutter_linux_v${FLUTTER_VERSION}.tar.xz
     tar xf flutter.tar.xz > /dev/null
@@ -23,7 +23,9 @@ install:
     export PATH="$PATH":"$PWD/$SAUCE_RUNNER/bin"
 
 before_script:
-  # build apks
+  # setup android/local.properties and build debug apk
+  - flutter build apk --debug
+  # build apks required by espresso
   - |
     cd android
     gradle assembleAndroidTest assembleDebug
