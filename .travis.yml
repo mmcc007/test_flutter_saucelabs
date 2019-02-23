@@ -23,6 +23,7 @@ install:
 
 before_script:
   # setup android/local.properties
+  - export FLUTTER_ROOT=$PWD/flutter
   - flutter packages get
   - dart tool/setup_local_properties.dart
   # build apks required by espresso
