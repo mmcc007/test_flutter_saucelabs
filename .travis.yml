@@ -7,7 +7,8 @@ cache:
 
 jobs:
   include:
-    - stage: Genymotion Test
+    - stage: SauceLabs and Genymotion Tests
+      env: Genymotion Test
       before_install: &BEFORE_INSTALL
 
         # Install the Android SDK Dependency.
@@ -39,16 +40,18 @@ jobs:
         - flutter doctor -v
 
       before_script:
-        # setup ssh tunnel to genymotion
+        # setup ssh tunnel to genymotion emulator
+        - ssh-keyscan -t rsa -H $GENYMOTION_EMULATOR >> ~/.ssh/known_hosts
         - openssl enc -aes-256-cbc -d -in genymotion.pem.enc -out genymotion.pem -k $GENYMOTION_PEM_PASSWORD
-        - ssh -i ./genymotion.pem -NL 5555:localhost:5555 shell@ec2-54-219-161-225.us-west-1.compute.amazonaws.com
+        - ssh -i ./genymotion.pem -NL 5555:localhost:5555 shell@$GENYMOTION_EMULATOR &
         - adb connect localhost:5555
         - adb devices
 
       script:
         - flutter driver test_driver/transitions_perf.dart
 
-    - stage: SauceLabs Test
+    - stage:
+      env: Saucelabs test
       before_install: *BEFORE_INSTALL
 
       install:
