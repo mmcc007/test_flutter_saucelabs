@@ -7,7 +7,7 @@ cache:
 
 jobs:
   include:
-    - stage: SauceLabs and Genymotion Tests
+    - stage: Integration Tests
       env: Genymotion Test
       before_install: &BEFORE_INSTALL
 
@@ -43,6 +43,7 @@ jobs:
         # setup ssh tunnel to genymotion emulator
         - ssh-keyscan -t rsa -H $GENYMOTION_EMULATOR >> ~/.ssh/known_hosts
         - openssl enc -aes-256-cbc -d -in genymotion.pem.enc -out genymotion.pem -k $GENYMOTION_PEM_PASSWORD
+        - chmod 0600 genymotion.pem
         - ssh -i ./genymotion.pem -NL 5555:localhost:5555 shell@$GENYMOTION_EMULATOR &
         - adb connect localhost:5555
         - adb devices
