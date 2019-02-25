@@ -17,3 +17,6 @@ doc/api/
 
 # android studio
 .idea
+
+# genymotion
+genymotion.pem
