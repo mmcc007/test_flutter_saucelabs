@@ -24,8 +24,9 @@ jobs:
         - yes | sdkmanager --licenses
         # Platform tools
       #  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
-        - sdkmanager "tools" "platform-tools" > /dev/null
-      #  - sdkmanager --list | head -15
+        - sdkmanager "tools" "platform-tools" "build-tools" "platforms" > /dev/null
+ > /dev/null
+        - sdkmanager --list | head -15
 
         # install pre-compiled flutter
         - FLUTTER_CHANNEL=stable
@@ -44,7 +45,10 @@ jobs:
         - ssh-keyscan -t rsa -H $GENYMOTION_EMULATOR >> ~/.ssh/known_hosts
         - openssl enc -aes-256-cbc -d -in genymotion.pem.enc -out genymotion.pem -k $GENYMOTION_PEM_PASSWORD
         - chmod 0600 genymotion.pem
+        - ssh -i ./genymotion.pem -t shell@$GENYMOTION_EMULATOR "setprop persist.sys.usb.config adb"
         - ssh -i ./genymotion.pem -NL 5555:localhost:5555 shell@$GENYMOTION_EMULATOR &
+        - adb kill-server
+        - adb start-server
         - adb connect localhost:5555
         - adb devices
 
