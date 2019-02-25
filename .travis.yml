@@ -25,7 +25,6 @@ jobs:
         # Platform tools
       #  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
         - sdkmanager "tools" "platform-tools" "build-tools" "platforms" > /dev/null
- > /dev/null
         - sdkmanager --list | head -15
 
         # install pre-compiled flutter
