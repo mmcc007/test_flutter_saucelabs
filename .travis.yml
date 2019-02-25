@@ -24,7 +24,7 @@ jobs:
         - yes | sdkmanager --licenses
         # Platform tools
       #  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
-        - sdkmanager "tools" "platform-tools" "build-tools" "platforms" > /dev/null
+        - sdkmanager "tools" "platform-tools" "build-tools;27.0.3" "platforms;android-27" > /dev/null
         - sdkmanager --list | head -15
 
         # install pre-compiled flutter
